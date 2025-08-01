@@ -1,0 +1,77 @@
+---
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
+
+import Card from "../components/Card.astro";
+---
+
+<Layout>
+  <Welcome />
+  <h1>Aqui tienes algunos enlaces de paginas de Framework</h1>
+  <p>
+    Un framework, o marco de trabajo en español, es una estructura predefinida
+    que proporciona una base para el desarrollo de software o aplicaciones.
+  </p>
+  <section class="projects">
+    <Card
+      title="Un framework moderno para React."
+      description="Vite is a blazing fast frontend build tool powering the next generation of web applications."
+      image="../vite.jpg"
+      link="https://vite.dev/"
+    />
+    <Card
+      title="The React Framework for the Web"
+      description="Next.js enables you to create high-quality web applications with the power of React components."
+      image="../next.jpg"
+      link="https://nextjs.org/"
+    />
+    <Card
+      title="The web framework for  websites"
+      description="Astro is a JavaScript web framework optimized for building fast, content-driven websites."
+      image="../astro.jpg"
+      link="https://astro.build"
+    />
+
+    <Card
+      title="Build multi-platform apps in Python  "
+      description="Flet enables developers to easily build realtime web, mobile and desktop apps in Python."
+      image="../flet.png"
+      link="https://flet.dev/"
+    />
+
+    <Card
+      title="Un framework moderno para crear websites con Python."
+      description="A faster way to build and share data apps. an app in a few lines of code with our magically simple API.  "
+      image="../streamlit.jpg"
+      link="https://streamlit.io/"
+    />
+
+    <Card
+      title="Reflex es un framework Open Source "
+      description="Reflex is a library to build full-stack web apps in pure Python. "
+      image="../reflex.jpg"
+      link="https://reflex.dev/"
+    />
+  </section>
+</Layout>
+
+<style>
+  .projects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px auto;
+  }
+
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  p {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+  }
+</style>

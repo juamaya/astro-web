@@ -1,0 +1,51 @@
+---
+import astroLogo from '../assets/astro.svg';
+ 
+---
+
+ 
+ 
+	<main>
+		<section >
+			 <img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" /> 
+		</section>
+	</main>
+ 
+
+<style>
+	 
+
+ 
+
+	main {
+		background-color: #4b5563;
+		height: 4rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	 
+
+  
+ 
+
+	@media screen and (max-height: 368px) {
+		
+	}
+
+	@media screen and (max-width: 768px) {
+		#container {
+			display: flex;
+			flex-direction: column;
+		}
+
+		#hero {
+			display: block;
+			padding-top: 10%;
+		}
+
+		 
+
+	 
+	}
+</style>
