@@ -1,22 +1,131 @@
+---
+
+---
+
+<nav class="navbar">
+  <div class="container">
+    <a class="logo" href="/">Web Juamaya 🍺</a>
+
+    <button class="menu-toggle" aria-label="Abrir menú"> ☰ </button>
+
+    <ul class="nav-links">
+      <li><a href="/astro-web/">Inicio</a></li>
+      <li><a href="/astro-web/about">Acerca de</a></li>
+      <li><a href="/astro-web/proyects">Proyectos</a></li>
+      <li><a href="/astro-web/blog">Blog</a></li>
+      <li><a href="/astro-web/contact">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    padding-right: 1rem;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    z-index: 1000;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex: 1;
+    transition: max-height 0.3s ease-in-out;
+    
+  }
+
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav-links a:hover {
+    color: #00bcd4;
+  }
+
+  .nav-links li a.active {
+    color: #00bcd4;
+    border-bottom: 2px solid #00bcd4;
+  }
+
+  .menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+
+    .nav-links {
+      position: absolute;
+      top: 4.5rem;
+      left: 0;
+      right: 0;
+      background: #1a1a1a;
+      flex-direction: column;
+      max-height: 0;
+      overflow: hidden;
+      gap: 1rem;
+      padding: 0 1rem;
+    }
+
+    .nav-links.open {
+      max-height: 300px; /* Espacio suficiente para mostrar los links */
+      padding: 1rem;
+    }
+  }
+</style>
+
+ 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const toggle = document.querySelector(".menu-toggle");
     const navLinks = document.querySelector(".nav-links");
     const links = document.querySelectorAll(".nav-links a");
 
-    // ✅ Resalta el enlace activo de forma más robusta
-    const currentPath = window.location.pathname.replace(/\/$/, "");
-
+    // Resalta el enlace activo
+    const currentPath = window.location.pathname;
     links.forEach((link) => {
-      const href = link.getAttribute("href")?.replace(/\/$/, "");
-      if (href && currentPath.startsWith(href)) {
+      if (link.getAttribute("href") === currentPath) {
         link.classList.add("active");
       }
     });
 
     if (toggle) {
       toggle.addEventListener("click", () => {
-        navLinks?.classList.toggle("open");
+        if (navLinks) {
+          navLinks.classList.toggle("open");
+        }
       });
     }
 
@@ -29,11 +138,16 @@
           if (section) {
             section.scrollIntoView({ behavior: "smooth" });
           }
-          navLinks?.classList.toggle("open");
+          if (navLinks) {
+            navLinks.classList.toggle("open");
+          }
         } else {
-          navLinks?.classList.toggle("open");
+          if (navLinks) {
+            navLinks.classList.toggle("open");
+          }
         }
       });
     });
   });
 </script>
+ 
