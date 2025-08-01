@@ -1,42 +1,54 @@
- 
 ---
 const links = [
-  { href: '/astro-web/', label: 'Inicio' },
-  { href: '/astro-web/about', label: 'Acerca de' },
-  { href: '/astro-web/proyects', label: 'Proyectos' },
-  { href: '/astro-web/blog', label: 'Blog' },
-  { href: '/astro-web/contact', label: 'Contacto' }
+  { href: "/astro-web/", label: "Inicio" },
+  { href: "/astro-web/about", label: "Acerca de" },
+  { href: "/astro-web/proyects", label: "Proyectos" },
+  { href: "/astro-web/blog", label: "Blog" },
+  { href: "/astro-web/contact", label: "Contacto" },
 ];
 
 // Obtener la ruta actual desde la URL
 const { pathname } = Astro.url;
-const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop();
+const currentSlug = pathname
+  .replace(/\/$/, "")
+  .split("/")
+  .filter(Boolean)
+  .pop();
 ---
 
 <nav class="navbar">
   <div class="container">
     <a class="logo" href="/">Web Juamaya 🍺</a>
 
-    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
+    <button
+      class="menu-toggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="nav-links">☰</button
+    >
 
     <ul class="nav-links" id="nav-links">
-      {links.map(({ href, label }) => {
-        const slug = href.replace(/\/$/, "").split("/").filter(Boolean).pop();
-        const isActive = slug === currentSlug;
-        return (
-          <li>
-            <a href={href} class={isActive ? 'active' : ''}>{label}</a>
-          </li>
-        );
-      })}
+      {
+        links.map(({ href, label }) => {
+          const slug = href.replace(/\/$/, "").split("/").filter(Boolean).pop();
+          const isActive = slug === currentSlug;
+          return (
+            <li>
+              <a href={href} class={isActive ? "active" : ""}>
+                {label}
+              </a>
+            </li>
+          );
+        })
+      }
     </ul>
   </div>
 </nav>
-
 <style>
   .navbar {
     background-color: #1a1a1a;
     padding: 1rem;
+    padding-right: 1rem;
     color: white;
     position: fixed;
     top: 0;
@@ -46,7 +58,7 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
   }
 
   .container {
-   display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
   }
@@ -56,7 +68,6 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
     font-weight: bold;
     color: white;
     text-decoration: none;
-    margin-right: auto;
   }
 
   .nav-links {
@@ -64,6 +75,7 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
     display: flex;
     gap: 1.5rem;
     justify-content: center;
+    flex: 1;
     transition: max-height 0.3s ease-in-out;
   }
 
@@ -91,6 +103,7 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
     cursor: pointer;
   }
 
+  /* Responsive */
   @media (max-width: 768px) {
     .menu-toggle {
       display: block;
@@ -110,13 +123,13 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
     }
 
     .nav-links.open {
-      max-height: 300px;
+      max-height: 300px; /* Espacio suficiente para mostrar los links */
       padding: 1rem;
     }
   }
 </style>
 
-<script >
+<script>
   document.addEventListener("DOMContentLoaded", () => {
     const toggle = document.querySelector(".menu-toggle");
     const navLinks = document.querySelector(".nav-links");
@@ -125,7 +138,10 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
     if (toggle && navLinks) {
       toggle.addEventListener("click", () => {
         navLinks.classList.toggle("open");
-        toggle.setAttribute("aria-expanded", navLinks.classList.contains("open").toString());
+        toggle.setAttribute(
+          "aria-expanded",
+          navLinks.classList.contains("open").toString()
+        );
       });
 
       links.forEach((link) => {
@@ -137,4 +153,3 @@ const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop()
     }
   });
 </script>
-
