@@ -1,19 +1,34 @@
+ 
 ---
+const links = [
+  { href: '/astro-web/', label: 'Inicio' },
+  { href: '/astro-web/about', label: 'Acerca de' },
+  { href: '/astro-web/proyects', label: 'Proyectos' },
+  { href: '/astro-web/blog', label: 'Blog' },
+  { href: '/astro-web/contact', label: 'Contacto' }
+];
 
+// Obtener la ruta actual desde la URL
+const { pathname } = Astro.url;
+const currentSlug = pathname.replace(/\/$/, "").split("/").filter(Boolean).pop();
 ---
 
 <nav class="navbar">
   <div class="container">
     <a class="logo" href="/">Web Juamaya 🍺</a>
 
-    <button class="menu-toggle" aria-label="Abrir menú"> ☰ </button>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
 
-    <ul class="nav-links">
-      <li><a href="/astro-web/">Inicio</a></li>
-      <li><a href="/astro-web/about">Acerca de</a></li>
-      <li><a href="/astro-web/proyects">Proyectos</a></li>
-      <li><a href="/astro-web/blog">Blog</a></li>
-      <li><a href="/astro-web/contact">Contacto</a></li>
+    <ul class="nav-links" id="nav-links">
+      {links.map(({ href, label }) => {
+        const slug = href.replace(/\/$/, "").split("/").filter(Boolean).pop();
+        const isActive = slug === currentSlug;
+        return (
+          <li>
+            <a href={href} class={isActive ? 'active' : ''}>{label}</a>
+          </li>
+        );
+      })}
     </ul>
   </div>
 </nav>
@@ -22,20 +37,19 @@
   .navbar {
     background-color: #1a1a1a;
     padding: 1rem;
-    padding-right: 1rem;
     color: white;
     position: fixed;
     top: 0;
     left: 0;
-    width:100%;
+    width: 100%;
     z-index: 1000;
   }
 
   .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
- 
+    flex-wrap: wrap;
   }
 
   .logo {
@@ -43,7 +57,7 @@
     font-weight: bold;
     color: white;
     text-decoration: none;
-    
+    margin-right: auto;
   }
 
   .nav-links {
@@ -51,9 +65,7 @@
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    flex: 1;
     transition: max-height 0.3s ease-in-out;
-    
   }
 
   .nav-links li a {
@@ -80,7 +92,6 @@
     cursor: pointer;
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .menu-toggle {
       display: block;
@@ -100,54 +111,31 @@
     }
 
     .nav-links.open {
-      max-height: 300px; /* Espacio suficiente para mostrar los links */
+      max-height: 300px;
       padding: 1rem;
     }
   }
 </style>
 
- 
-<script>
+<script >
   document.addEventListener("DOMContentLoaded", () => {
     const toggle = document.querySelector(".menu-toggle");
     const navLinks = document.querySelector(".nav-links");
     const links = document.querySelectorAll(".nav-links a");
 
-    // Resalta el enlace activo
-    const currentPath = window.location.pathname;
-    links.forEach((link) => {
-      if (link.getAttribute("href") === currentPath) {
-        link.classList.add("active");
-      }
-    });
-
-    if (toggle) {
+    if (toggle && navLinks) {
       toggle.addEventListener("click", () => {
-        if (navLinks) {
-          navLinks.classList.toggle("open");
-        }
+        navLinks.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", navLinks.classList.contains("open").toString());
+      });
+
+      links.forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("open");
+          toggle.setAttribute("aria-expanded", "false");
+        });
       });
     }
-
-    links.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        const href = link.getAttribute("href");
-        if (href && href.startsWith("#")) {
-          e.preventDefault();
-          const section = document.querySelector(href);
-          if (section) {
-            section.scrollIntoView({ behavior: "smooth" });
-          }
-          if (navLinks) {
-            navLinks.classList.toggle("open");
-          }
-        } else {
-          if (navLinks) {
-            navLinks.classList.toggle("open");
-          }
-        }
-      });
-    });
   });
 </script>
- 
+
